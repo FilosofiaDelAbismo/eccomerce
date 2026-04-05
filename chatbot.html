@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chat IA para Vendedores — ShopIA</title>
+<meta name="description" content="Asistente IA gratuito especializado en e-commerce. Estrategia de producto, Amazon FBA, Shopify, Etsy y publicidad. Sin registro ni límites.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.shopiatools.com/chatbot.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<script defer data-domain="shopiatools.com" src="https://analytics.digiprompts.io/js/script.js"></script>
+<style>
+:root{
+  --ink:#0D0F14;--ink2:#161923;--ink3:#1E2430;
+  --wall:#232C3A;--wall2:#2A3545;
+  --mist:#C8D4E8;--mist2:#7A8FAA;--mist3:#3D5070;
+  --accent:#5BBFFF;--accent-bg:rgba(91,191,255,0.06);--accent-bd:rgba(91,191,255,0.18);
+  --gold:#FFD166;--gold-bg:rgba(255,209,102,0.06);
+  --coral:#FF7A5A;
+  --display:'Fraunces',Georgia,serif;
+  --body:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--body);background:var(--ink);color:var(--mist);line-height:1.6}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+
+nav{position:relative;z-index:200;background:rgba(13,15,20,0.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--wall);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.nav-logo{font-family:var(--display);font-size:22px;font-weight:900;color:var(--mist);text-decoration:none;letter-spacing:-0.5px}
+.nav-logo em{color:var(--accent);font-style:italic}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--mist2);text-decoration:none;padding:7px 14px;border-radius:6px;transition:all 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);background:var(--accent-bg)}
+.btn-nav{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:6px;text-decoration:none;background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-bd);transition:all 0.2s}
+.btn-nav:hover{background:var(--accent);color:var(--ink)}
+
+.app{display:flex;height:calc(100vh - 64px);position:relative;z-index:1}
+
+/* SIDEBAR */
+.sidebar{width:260px;flex-shrink:0;background:var(--ink2);border-right:1px solid var(--wall);display:flex;flex-direction:column;overflow:hidden}
+.sb-head{padding:20px 16px 12px;border-bottom:1px solid var(--wall)}
+.sb-title{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mist3);margin-bottom:12px}
+.new-chat{width:100%;padding:10px 14px;background:var(--accent-bg);border:1px solid var(--accent-bd);border-radius:8px;color:var(--accent);font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+.new-chat:hover{background:var(--accent);color:var(--ink)}
+.prompts-section{flex:1;overflow-y:auto;padding:16px}
+.prompts-section::-webkit-scrollbar{width:4px}
+.prompts-section::-webkit-scrollbar-thumb{background:var(--wall2);border-radius:2px}
+.pg-title{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mist3);margin-bottom:8px;margin-top:16px}
+.pg-title:first-child{margin-top:0}
+.qp{width:100%;text-align:left;padding:8px 10px;border-radius:7px;border:1px solid transparent;background:transparent;color:var(--mist2);font-family:var(--body);font-size:12px;cursor:pointer;transition:all 0.15s;line-height:1.4;display:flex;align-items:flex-start;gap:8px}
+.qp:hover{background:var(--ink3);border-color:var(--wall);color:var(--mist)}
+.qp-ico{font-size:14px;flex-shrink:0;margin-top:1px}
+.sb-foot{padding:12px 16px;border-top:1px solid var(--wall)}
+.nl-mini{display:flex;align-items:center;gap:10px;padding:10px 12px;background:linear-gradient(135deg,var(--accent-bg),var(--gold-bg));border:1px solid var(--wall2);border-radius:8px;text-decoration:none;transition:all 0.2s}
+.nl-mini:hover{border-color:var(--accent-bd)}
+.nm-ico{font-size:18px}
+.nm-name{font-size:12px;font-weight:600;color:var(--mist)}
+.nm-sub{font-size:10px;color:var(--mist3)}
+.nm-arr{font-size:12px;color:var(--accent);margin-left:auto}
+
+/* CHAT */
+.chat-area{flex:1;display:flex;flex-direction:column;min-width:0}
+.ctx-bar{padding:10px 20px;border-bottom:1px solid var(--wall);display:flex;gap:6px;flex-wrap:wrap;background:var(--ink2)}
+.ctx-chip{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:100px;cursor:pointer;border:1px solid var(--wall);background:transparent;color:var(--mist3);transition:all 0.15s}
+.ctx-chip:hover,.ctx-chip.active{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-bd)}
+.messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+.messages::-webkit-scrollbar{width:4px}
+.messages::-webkit-scrollbar-thumb{background:var(--wall2);border-radius:2px}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:40px 20px}
+.w-icon{font-size:48px;margin-bottom:20px}
+.w-title{font-family:var(--display);font-size:28px;font-weight:900;letter-spacing:-0.8px;color:var(--mist);margin-bottom:10px}
+.w-title em{color:var(--accent);font-style:italic}
+.w-desc{font-size:15px;color:var(--mist2);max-width:460px;line-height:1.7;margin-bottom:32px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:580px}
+.chip{padding:8px 14px;background:var(--ink3);border:1px solid var(--wall2);border-radius:100px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.5px;color:var(--mist2);cursor:pointer;transition:all 0.2s}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.msg{display:flex;gap:12px;max-width:800px}
+.msg.user{flex-direction:row-reverse;align-self:flex-end}
+.msg-av{width:32px;height:32px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.msg.assistant .msg-av{background:linear-gradient(135deg,var(--accent-bg),var(--gold-bg));border:1px solid var(--accent-bd)}
+.msg.user .msg-av{background:var(--ink3);border:1px solid var(--wall)}
+.msg-content{flex:1;min-width:0}
+.msg-name{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--mist3);margin-bottom:5px}
+.msg.user .msg-name{text-align:right}
+.msg-bubble{padding:14px 18px;border-radius:10px;font-size:14px;line-height:1.7}
+.msg.assistant .msg-bubble{background:var(--ink2);border:1px solid var(--wall);color:var(--mist);border-radius:2px 10px 10px 10px}
+.msg.user .msg-bubble{background:var(--accent);color:var(--ink);border-radius:10px 2px 10px 10px;font-weight:500}
+.msg-actions{display:flex;gap:6px;margin-top:6px}
+.act-btn{font-family:var(--mono);font-size:8px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid var(--wall);background:transparent;color:var(--mist3);cursor:pointer;transition:all 0.15s}
+.act-btn:hover{border-color:var(--accent);color:var(--accent)}
+.typing{display:flex;gap:4px;padding:14px 18px;background:var(--ink2);border:1px solid var(--wall);border-radius:2px 10px 10px 10px;width:fit-content}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--mist3);animation:typ 1.2s infinite}
+.typing span:nth-child(2){animation-delay:0.2s}
+.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes typ{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.err-bubble{padding:12px 16px;background:rgba(255,122,90,0.08);border:1px solid rgba(255,122,90,0.25);border-radius:8px;font-size:13px;color:var(--coral)}
+.input-area{padding:16px 20px;border-top:1px solid var(--wall);background:var(--ink2)}
+.input-row{display:flex;gap:10px;align-items:flex-end;background:var(--ink3);border:1px solid var(--wall);border-radius:12px;padding:10px 14px;transition:border-color 0.2s}
+.input-row:focus-within{border-color:var(--accent-bd)}
+textarea#user-input{flex:1;background:transparent;border:none;outline:none;resize:none;color:var(--mist);font-family:var(--body);font-size:14px;line-height:1.5;max-height:160px}
+#send-btn{width:36px;height:36px;border-radius:8px;background:var(--accent);color:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;flex-shrink:0;font-weight:700}
+#send-btn:hover{opacity:0.88}
+#send-btn:disabled{opacity:0.4;cursor:not-allowed}
+.input-meta{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:var(--mist3)}
+.input-meta a{color:var(--accent);text-decoration:none}
+@media(max-width:768px){.sidebar{display:none}nav{padding:0 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Shop<em>IA</em></a>
+  <ul class="nav-links">
+    <li><a href="herramientas.html">Herramientas</a></li>
+    <li><a href="chatbot.html" class="active">Chat IA ✦</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="partners_shopia.html">Partners</a></li>
+  </ul>
+  <a href="suscripcion.html" class="btn-nav">1.000 prompts →</a>
+</nav>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">Asistente E-commerce</div>
+      <button class="new-chat" onclick="newChat()">✦ Nueva conversación</button>
+    </div>
+    <div class="prompts-section">
+      <div class="pg-title">Amazon FBA</div>
+      <button class="qp" data-prompt="¿Cómo valido si un producto tiene demanda en Amazon antes de invertir?"><span class="qp-ico">📦</span>Validar producto Amazon</button>
+      <button class="qp" data-prompt="Explícame el proceso completo de lanzamiento de un producto en Amazon FBA paso a paso"><span class="qp-ico">🚀</span>Proceso lanzamiento FBA</button>
+      <button class="qp" data-prompt="¿Cómo optimizo mi PPC de Amazon para reducir ACoS y aumentar ventas?"><span class="qp-ico">🎯</span>Optimizar Amazon PPC</button>
+
+      <div class="pg-title">Shopify &amp; Tiendas</div>
+      <button class="qp" data-prompt="Dame una estrategia de 30 días para lanzar mi primera tienda Shopify de 0"><span class="qp-ico">🛍️</span>Lanzar tienda Shopify</button>
+      <button class="qp" data-prompt="¿Cuáles son las mejores apps de Shopify para aumentar conversiones en 2026?"><span class="qp-ico">⚡</span>Apps Shopify 2026</button>
+      <button class="qp" data-prompt="¿Cómo reduzco el abandono de carrito en mi tienda online?"><span class="qp-ico">🛒</span>Reducir abandono carrito</button>
+
+      <div class="pg-title">Etsy &amp; Nichos</div>
+      <button class="qp" data-prompt="¿Cómo posicionar mi tienda Etsy cuando hay mucha competencia en mi nicho?"><span class="qp-ico">🎨</span>Posicionar en Etsy</button>
+      <button class="qp" data-prompt="¿Qué nichos de e-commerce tienen más potencial de crecimiento en 2026?"><span class="qp-ico">📈</span>Nichos con potencial 2026</button>
+
+      <div class="pg-title">Estrategia</div>
+      <button class="qp" data-prompt="¿Cuál es la diferencia entre vender en Amazon, Shopify y Etsy y cuál me recomiendas para empezar?"><span class="qp-ico">🧠</span>Amazon vs Shopify vs Etsy</button>
+      <button class="qp" data-prompt="¿Cómo escalo una tienda de Shopify que ya vende 5.000€/mes a 50.000€?"><span class="qp-ico">📊</span>Escalar a 50K/mes</button>
+    </div>
+    <div class="sb-foot">
+      <a href="suscripcion.html" class="nl-mini">
+        <span class="nm-ico">🎁</span>
+        <div><div class="nm-name">1.000 prompts</div><div class="nm-sub">Pack gratis al suscribirte</div></div>
+        <span class="nm-arr">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="chat-area">
+    <div class="ctx-bar">
+      <button class="ctx-chip active" data-ctx="vendedor" onclick="toggleCtx(this)">🛒 Vendedor General</button>
+      <button class="ctx-chip" data-ctx="amazon" onclick="toggleCtx(this)">📦 Amazon FBA</button>
+      <button class="ctx-chip" data-ctx="shopify" onclick="toggleCtx(this)">🛍️ Shopify</button>
+      <button class="ctx-chip" data-ctx="etsy" onclick="toggleCtx(this)">🎨 Etsy</button>
+      <button class="ctx-chip" data-ctx="ads" onclick="toggleCtx(this)">📱 Publicidad</button>
+    </div>
+    <div class="messages" id="messages">
+      <div class="welcome" id="welcome-screen">
+        <div class="w-icon">🛒</div>
+        <h2 class="w-title">Shop<em>IA</em> Chat</h2>
+        <p class="w-desc">Tu asistente IA especializado en e-commerce. Amazon, Shopify, Etsy, publicidad y estrategia de producto. Pregúntame cualquier cosa.</p>
+        <div class="chips" id="chips-container">
+          <div class="chip" data-prompt="¿Cómo valido si un producto tiene demanda en Amazon?">🔍 Validar producto Amazon</div>
+          <div class="chip" data-prompt="Dame una estrategia de 30 días para lanzar mi primera tienda Shopify">🚀 Lanzar tienda Shopify</div>
+          <div class="chip" data-prompt="¿Cómo posicionar mi tienda Etsy cuando hay mucha competencia?">🎨 Posicionar en Etsy</div>
+          <div class="chip" data-prompt="¿Qué nichos de e-commerce crecen en 2026?">📈 Nichos 2026</div>
+          <div class="chip" data-prompt="¿Cuál es el margen mínimo viable para Amazon FBA?">💰 Margen mínimo FBA</div>
+          <div class="chip" data-prompt="¿Cómo escribo bullets de Amazon que conviertan más?">📝 Bullets Amazon que venden</div>
+        </div>
+      </div>
+    </div>
+    <div class="input-area">
+      <div class="input-row">
+        <textarea id="user-input" rows="1" placeholder="Pregunta sobre Amazon, Shopify, Etsy o cualquier estrategia..." oninput="autoResize(this)" onkeydown="handleKey(event)"></textarea>
+        <button id="send-btn" onclick="sendMessage()">▶</button>
+      </div>
+      <div class="input-meta">
+        <span>IA especializada en e-commerce · <a href="herramientas.html">Ver herramientas →</a></span>
+        <span>⏎ Enviar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var PROXY_URL='[API-ORACLE-URL]';
+
+var SYSTEMS={
+  vendedor:'Eres un experto en e-commerce con 10 años de experiencia vendiendo en Amazon, Shopify y Etsy. Ayudas a vendedores a lanzar y escalar tiendas online, optimizar listings, mejorar conversiones y crecer de forma sostenible. Eres directo, práctico y usas ejemplos reales. Responde siempre en español.',
+  amazon:'Eres un experto en Amazon FBA con experiencia en múltiples categorías. Dominas el algoritmo A9, keywords, PPC, listings, logística y relaciones con proveedores. Das consejos específicos y accionables para vendedores de Amazon. Responde en español.',
+  shopify:'Eres un experto en Shopify y tiendas online DTC (direct-to-consumer). Dominas CRO, email marketing, apps de Shopify, Facebook/Meta Ads y estrategia de marca. Ayudas a escalar tiendas de 0 a 7 cifras. Responde en español.',
+  etsy:'Eres un experto en Etsy, print on demand y ventas de productos artesanales. Dominas SEO de Etsy, thumbnails que convierten, pricing competitivo y escalar tiendas artesanales. Responde en español.',
+  ads:'Eres un experto en publicidad de pago para e-commerce: Facebook/Meta Ads, Google Shopping, TikTok Ads y Amazon PPC. Especializado en estructuras de campañas rentables, ROAS y escalar presupuestos. Responde en español.'
+};
+
+var chatHistory=[];var activeCtx='vendedor';var isProcessing=false;
+
+function toggleCtx(el){document.querySelectorAll('.ctx-chip').forEach(function(c){c.classList.remove('active');});el.classList.add('active');activeCtx=el.dataset.ctx;}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,160)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function newChat(){chatHistory=[];document.getElementById('messages').innerHTML=getWelcomeHTML();attachChips();}
+
+function getWelcomeHTML(){
+  return '<div class="welcome" id="welcome-screen"><div class="w-icon">🛒</div><h2 class="w-title">Shop<em>IA</em> Chat</h2><p class="w-desc">Tu asistente IA especializado en e-commerce. Amazon, Shopify, Etsy, publicidad y estrategia de producto.</p><div class="chips" id="chips-container"><div class="chip" data-prompt="¿Cómo valido si un producto tiene demanda en Amazon?">🔍 Validar producto Amazon</div><div class="chip" data-prompt="Dame una estrategia de 30 días para lanzar mi primera tienda Shopify">🚀 Lanzar tienda Shopify</div><div class="chip" data-prompt="¿Cómo posicionar mi tienda Etsy cuando hay mucha competencia?">🎨 Posicionar en Etsy</div><div class="chip" data-prompt="¿Qué nichos de e-commerce crecen en 2026?">📈 Nichos 2026</div></div></div>';
+}
+
+function attachChips(){
+  document.querySelectorAll('.chip[data-prompt]').forEach(function(c){
+    c.addEventListener('click',function(){document.getElementById('user-input').value=this.dataset.prompt;sendMessage();});
+  });
+  document.querySelectorAll('.qp[data-prompt]').forEach(function(b){
+    b.addEventListener('click',function(){document.getElementById('user-input').value=this.dataset.prompt;sendMessage();});
+  });
+}
+
+function sendMessage(){
+  if(isProcessing)return;
+  var input=document.getElementById('user-input');
+  var userText=input.value.trim();
+  if(!userText)return;
+  var welcome=document.getElementById('welcome-screen');
+  if(welcome)welcome.remove();
+  appendMsg('user',userText);
+  input.value='';input.style.height='auto';
+  chatHistory.push({role:'user',content:userText});
+  isProcessing=true;
+  var btn=document.getElementById('send-btn');btn.disabled=true;btn.textContent='⏳';
+  var typId=appendTyping();
+  fetch(PROXY_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({system:SYSTEMS[activeCtx],messages:chatHistory})
+  })
+  .then(function(r){
+    removeTyping(typId);
+    if(!r.ok)throw new Error(r.status===429?'Límite alcanzado. Espera un momento.':'Error de conexión con el servidor.');
+    return r.json();
+  })
+  .then(function(d){
+    var reply=d.reply||'';
+    if(!reply)throw new Error('Respuesta vacía del servidor.');
+    chatHistory.push({role:'assistant',content:reply});
+    appendMsg('assistant',reply);
+  })
+  .catch(function(e){removeTyping(typId);appendErr(e.message);})
+  .finally(function(){isProcessing=false;btn.disabled=false;btn.textContent='▶';});
+}
+
+function appendMsg(role,text){
+  var msgs=document.getElementById('messages');
+  var w=document.createElement('div');w.className='msg '+role;
+  var av=document.createElement('div');av.className='msg-av';av.textContent=role==='user'?'👤':'🛒';
+  var c=document.createElement('div');c.className='msg-content';
+  var n=document.createElement('div');n.className='msg-name';n.textContent=role==='user'?'Tú':'ShopIA AI';
+  var b=document.createElement('div');b.className='msg-bubble';
+  b.innerHTML=formatText(text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  c.appendChild(n);c.appendChild(b);
+  if(role==='assistant'){
+    var acts=document.createElement('div');acts.className='msg-actions';
+    var cpBtn=document.createElement('button');cpBtn.className='act-btn';cpBtn.textContent='Copiar';
+    var ct=text;
+    cpBtn.addEventListener('click',function(){navigator.clipboard.writeText(ct).then(function(){cpBtn.textContent='✓ Copiado';setTimeout(function(){cpBtn.textContent='Copiar';},2000);});});
+    acts.appendChild(cpBtn);c.appendChild(acts);
+  }
+  w.appendChild(av);w.appendChild(c);msgs.appendChild(w);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function appendTyping(){
+  var msgs=document.getElementById('messages');
+  var id='ty_'+Date.now();
+  var d=document.createElement('div');d.className='msg assistant';d.id=id;
+  d.innerHTML='<div class="msg-av">🛒</div><div class="msg-content"><div class="msg-name">ShopIA AI</div><div class="typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return id;
+}
+function removeTyping(id){var el=document.getElementById(id);if(el)el.remove();}
+function appendErr(msg){
+  var msgs=document.getElementById('messages');
+  var d=document.createElement('div');d.className='msg assistant';
+  d.innerHTML='<div class="msg-av">🛒</div><div class="msg-content"><div class="msg-name">ShopIA AI</div><div class="err-bubble">⚠️ '+msg+'<br><small style="opacity:0.7">Configura PROXY_URL con tu Oracle endpoint.</small></div></div>';
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function formatText(t){
+  t=t.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  t=t.replace(/### (.+)/g,'<h4 style="color:var(--accent);margin:10px 0 5px;font-family:var(--display);font-size:14px;">$1</h4>');
+  t=t.replace(/## (.+)/g,'<h3 style="color:var(--accent);margin:12px 0 6px;font-family:var(--display);">$1</h3>');
+  t=t.replace(/^- (.+)$/gm,'<li style="margin-bottom:3px;padding-left:8px;">$1</li>');
+  t=t.replace(/\n\n/g,'</p><p style="margin-bottom:8px;">');
+  t=t.replace(/\n/g,'<br>');
+  return '<p style="margin-bottom:8px;">'+t+'</p>';
+}
+
+window.addEventListener('load',attachChips);
+</script>
+</body>
+</html>

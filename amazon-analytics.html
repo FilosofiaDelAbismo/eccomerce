@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Analytics Weekly — ShopIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #16a34a;
+    --green-light: #22c55e;
+    --green-glow: rgba(34,197,94,0.15);
+    --bg: #080b08;
+    --bg2: #0d120d;
+    --bg3: #111811;
+    --border: rgba(34,197,94,0.12);
+    --text: #e8ede8;
+    --muted: #6b7a6b;
+    --card: #0f160f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* HERO GLOW */
+  .hero-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse at center, rgba(34,197,94,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(8,11,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--green-light); }
+
+  .nav-badge {
+    background: var(--green-glow);
+    border: 1px solid rgba(34,197,94,0.3);
+    color: var(--green-light);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 160px 40px 100px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-glow);
+    border: 1px solid rgba(34,197,94,0.25);
+    color: var(--green-light);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green-light);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .line2 {
+    display: block;
+    color: var(--green-light);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    max-width: 560px;
+    margin: 0 auto 48px;
+    color: #8fa08f;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-light);
+    color: #040804;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 16px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34,197,94,0.3); }
+
+  .btn-secondary {
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+  .price-tag {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .price-tag strong { color: var(--green-light); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    flex: 1;
+    max-width: 220px;
+    padding: 28px 24px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--green-light);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  /* WHAT YOU GET */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 48px;
+  }
+
+  .feature-card {
+    background: var(--card);
+    padding: 28px;
+    transition: background 0.2s;
+  }
+
+  .feature-card:hover { background: var(--bg3); }
+
+  .feature-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* PREVIEW */
+  .preview-wrap {
+    margin-top: 48px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .preview-bar {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preview-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .preview-dot:nth-child(1) { background: #ef4444; }
+  .preview-dot:nth-child(2) { background: #f59e0b; }
+  .preview-dot:nth-child(3) { background: var(--green-light); }
+
+  .preview-title {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+
+  .preview-inner {
+    background: #0a0f0a;
+    padding: 24px;
+  }
+
+  /* Sample report preview */
+  .report-header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #0d1a10, #0d1620);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+
+  .report-title-sm {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .report-title-sm span { color: var(--green-light); }
+
+  .report-ts {
+    font-size: 11px;
+    color: var(--green);
+    background: rgba(34,197,94,0.1);
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .report-stat {
+    background: #0f160f;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .report-stat-v {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--green-light);
+  }
+
+  .report-stat-l {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .report-section {
+    background: #0f160f;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .report-section-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .report-pattern {
+    background: #131f13;
+    border-left: 3px solid var(--green-light);
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .report-pattern-name {
+    font-size: 12px;
+    color: #a5b4fc;
+    font-weight: 600;
+  }
+
+  .report-pattern-pct {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-light);
+  }
+
+  .preview-blur {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(transparent, var(--bg));
+    pointer-events: none;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 48px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 28px 32px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .step:last-child { border-bottom: none; }
+  .step:hover { background: var(--bg3); }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green);
+    background: var(--green-glow);
+    border: 1px solid rgba(34,197,94,0.2);
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* PRICING */
+  .pricing-wrap {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .pricing-wrap { grid-template-columns: 1fr; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); max-width: 100%; }
+    .report-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card.featured {
+    border-color: rgba(34,197,94,0.4);
+    background: linear-gradient(135deg, #0d1a10, #0a120a);
+  }
+
+  .pricing-card.featured::before {
+    content: 'LANZAMIENTO';
+    position: absolute;
+    top: 16px; right: -24px;
+    background: var(--green-light);
+    color: #040804;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 40px;
+    transform: rotate(45deg);
+    letter-spacing: 1px;
+  }
+
+  .pricing-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .pricing-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-card.featured .pricing-price { color: var(--green-light); }
+
+  .pricing-period {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .pricing-features li {
+    font-size: 14px;
+    color: #8fa08f;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--green-light);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .pricing-features li.muted::before { content: '–'; color: var(--muted); }
+  .pricing-features li.muted { opacity: 0.5; }
+
+  .btn-plan {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    border-radius: 4px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: -0.3px;
+  }
+
+  .btn-plan.primary {
+    background: var(--green-light);
+    color: #040804;
+  }
+
+  .btn-plan.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(34,197,94,0.3);
+  }
+
+  .btn-plan.secondary {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-plan.secondary:hover {
+    border-color: rgba(34,197,94,0.3);
+    color: var(--text);
+  }
+
+  /* FAQ */
+  .faq-list {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-item {
+    padding: 24px 28px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .faq-a {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    text-align: center;
+    background: var(--bg2);
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .footer-logo span { color: var(--green-light); }
+
+  .footer-sub {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .lang-toggle {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: center;
+  }
+
+  .lang-btn {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .lang-btn.active {
+    background: var(--green-glow);
+    border-color: rgba(34,197,94,0.3);
+    color: var(--green-light);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://shopiatools.com" class="nav-logo">Shop<span>IA</span></a>
+  <span class="nav-badge">⚡ NUEVO PRODUCTO</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">Disponible cada lunes · Datos reales · ES + EN</div>
+
+  <h1>
+    Inteligencia de mercado
+    <span class="line2">para Amazon España</span>
+  </h1>
+
+  <p class="hero-sub">
+    Cada lunes a las 9AM recibes un análisis completo de bestsellers, 
+    patrones de precio y oportunidades de nicho — generado por IA 
+    sobre datos reales de la semana.
+  </p>
+
+  <div class="hero-cta">
+    <a href="https://pajarobueno.gumroad.com/l/AmazonAnalyticsWeekly" class="btn-primary">
+      Suscribirme por 19€/mes →
+    </a>
+    <a href="#preview" class="btn-secondary">Ver ejemplo de informe</a>
+  </div>
+
+  <p class="price-tag">
+    🔒 Precio de lanzamiento <strong>19€/mes</strong> — sube a 29€ el 1 de mayo.<br>
+    Los primeros 20 suscriptores se quedan al precio de siempre.
+  </p>
+
+  <div class="lang-toggle">
+    <button class="lang-btn active">🇪🇸 Informe en Español</button>
+    <button class="lang-btn">🇬🇧 Report in English</button>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">6+</div>
+    <div class="stat-label">Categorías analizadas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">200+</div>
+    <div class="stat-label">Bestsellers por informe</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Idiomas incluidos</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5min</div>
+    <div class="stat-label">Para leer el informe</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU GET -->
+<section>
+  <div class="section-label">Qué incluye</div>
+  <h2>Todo lo que necesitas<br>para esta semana</h2>
+  <p style="color:var(--muted);max-width:520px;font-size:15px">
+    No más horas investigando Amazon. El informe condensa lo más importante 
+    en un documento que puedes leer en 5 minutos.
+  </p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📦</span>
+      <div class="feature-title">Bestsellers por categoría</div>
+      <div class="feature-desc">Top 20 productos de las categorías más vendidas en Amazon España esta semana, con precios reales y posiciones.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-title">Patrones de precio detectados</div>
+      <div class="feature-desc">La IA identifica qué rangos de precio dominan cada nicho y qué estrategias están usando los vendedores top.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <div class="feature-title">Oportunidades de nicho</div>
+      <div class="feature-desc">Categorías y sub-nichos con menos competencia y buena demanda — dónde hay espacio para entrar ahora mismo.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔍</span>
+      <div class="feature-title">Tendencias Google España</div>
+      <div class="feature-desc">Qué están buscando los consumidores españoles esta semana — antes de que la competencia lo vea.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🤖</span>
+      <div class="feature-title">Análisis DeepSeek IA</div>
+      <div class="feature-desc">Interpretación experta de todos los datos con recomendaciones accionables para esta semana concreta.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌍</span>
+      <div class="feature-title">Bilingüe ES + EN</div>
+      <div class="feature-desc">El mismo informe completo en español e inglés. Perfecto si vendes en múltiples marketplaces o tienes equipo internacional.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section id="preview">
+  <div class="section-label">Vista previa</div>
+  <h2>Así es el informe<br>de esta semana</h2>
+
+  <div class="preview-wrap">
+    <div class="preview-bar">
+      <div class="preview-dot"></div>
+      <div class="preview-dot"></div>
+      <div class="preview-dot"></div>
+      <span class="preview-title">informe_amazon_semana14_2026.html</span>
+    </div>
+    <div class="preview-inner">
+      <div class="report-header">
+        <div class="report-title-sm">Amazon <span>Analytics</span></div>
+        <div class="report-ts">10/04/2026 · ShopIA Weekly Report · 🇪🇸 ES + 🇬🇧 EN</div>
+      </div>
+
+      <div class="report-grid">
+        <div class="report-stat">
+          <div class="report-stat-v">260</div>
+          <div class="report-stat-l">Productos</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-v">6</div>
+          <div class="report-stat-l">Categorías</div>
+        </div>
+        <div class="report-stat">
+          <div class="report-stat-v">W14</div>
+          <div class="report-stat-l">Semana</div>
+        </div>
+      </div>
+
+      <div class="report-section">
+        <div class="report-section-title">Patrones detectados esta semana</div>
+        <div class="report-pattern">
+          <div>
+            <div class="report-pattern-name">PRECIO OCULTO · BELLEZA</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">6 de los top 10 no muestran precio — estrategia premium</div>
+          </div>
+          <div class="report-pattern-pct">60%</div>
+        </div>
+        <div class="report-pattern" style="border-left-color:#f97316">
+          <div>
+            <div class="report-pattern-name">NICHO ECONÓMICO · SALUD</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">70% de bestsellers por debajo de 20€ — barrera de entrada baja</div>
+          </div>
+          <div class="report-pattern-pct" style="color:#f97316">70%</div>
+        </div>
+      </div>
+
+      <div class="report-section" style="opacity:0.4;filter:blur(2px);pointer-events:none">
+        <div class="report-section-title">Análisis DeepSeek — Recomendaciones</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">
+          Esta semana, Amazon España muestra una clara polarización en precios. 
+          Electrónica con solo 20 bestsellers es la categoría menos saturada con 
+          mayor ticket medio (56€). En Mascotas el rango amplio (1.69€–54.49€) 
+          indica espacio para productos premium especializados...
+        </div>
+      </div>
+    </div>
+    <div class="preview-blur"></div>
+  </div>
+
+  <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--muted)">
+    El informe completo incluye análisis de todas las categorías, patrones de movimiento semanal y recomendaciones accionables.
+  </p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-label">Cómo funciona</div>
+  <h2>Automático.<br>Cada lunes sin fallar.</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <div class="step-title">El sistema analiza Amazon España</div>
+        <div class="step-desc">Cada domingo nuestro pipeline recopila automáticamente los bestsellers de 6 categorías de Amazon España — precios reales, posiciones y tendencias de la semana.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <div class="step-title">La IA detecta patrones y oportunidades</div>
+        <div class="step-desc">DeepSeek analiza los datos, identifica qué categorías están calentando, qué rangos de precio dominan y dónde hay espacio para entrar con menos competencia.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <div class="step-title">Recibes el informe el lunes a las 9AM</div>
+        <div class="step-desc">El informe completo llega a tu email en formato HTML interactivo — en español e inglés. Listo para leer en 5 minutos con las decisiones de esta semana.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <div class="step-title">Actúas antes que tu competencia</div>
+        <div class="step-desc">Mientras otros tardan horas investigando, tú ya sabes qué está pasando, qué nichos están abiertos y dónde poner el foco esta semana.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="section-label">Precios</div>
+  <h2>Simple.<br>Sin sorpresas.</h2>
+  <p style="color:var(--muted);max-width:480px;font-size:15px;margin-bottom:8px">
+    Baja cuando quieras. Sin permanencia. Sin compromiso.
+  </p>
+
+  <div class="pricing-wrap">
+    <div class="pricing-card featured">
+      <div class="pricing-name">Mensual — Early Bird</div>
+      <div class="pricing-price">19€</div>
+      <div class="pricing-period">/ mes · para siempre si entras ahora</div>
+      <ul class="pricing-features">
+        <li>Informe semanal completo</li>
+        <li>6 categorías Amazon España</li>
+        <li>Análisis IA con DeepSeek</li>
+        <li>Bilingüe ES + EN</li>
+        <li>Acceso a histórico de semanas</li>
+        <li>Alertas de nichos emergentes</li>
+      </ul>
+      <a href="https://pajarobueno.gumroad.com/l/AmazonAnalyticsWeekly" class="btn-plan primary">Empezar por 19€/mes →</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-name">Mensual — Precio normal</div>
+      <div class="pricing-price" style="color:var(--muted)">29€</div>
+      <div class="pricing-period">/ mes · disponible desde mayo 2026</div>
+      <ul class="pricing-features">
+        <li>Informe semanal completo</li>
+        <li>6 categorías Amazon España</li>
+        <li>Análisis IA con DeepSeek</li>
+        <li>Bilingüe ES + EN</li>
+        <li class="muted">Acceso a histórico de semanas</li>
+        <li class="muted">Alertas de nichos emergentes</li>
+      </ul>
+      <a href="https://pajarobueno.gumroad.com/l/AmazonAnalyticsWeekly" class="btn-plan secondary">Lista de espera →</a>
+    </div>
+  </div>
+
+  <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--muted)">
+    💳 Pago seguro via Gumroad · Cancela cuando quieras · Sin permanencia
+  </p>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-label">Preguntas frecuentes</div>
+  <h2>Todo lo que<br>necesitas saber</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">¿Cuándo recibo el informe?</div>
+      <div class="faq-a">Cada lunes a las 9AM hora española. El informe cubre los datos de bestsellers de la semana anterior — datos frescos, nunca reutilizados.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Qué categorías de Amazon analiza?</div>
+      <div class="faq-a">Electrónica, Belleza, Juguetes, Libros, Salud y Mascotas. Las categorías con mayor volumen de ventas en Amazon España. Próximamente: Hogar, Deportes, Ropa y Herramientas.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿El informe en inglés es una traducción automática?</div>
+      <div class="faq-a">No. DeepSeek genera el análisis de forma nativa en inglés, adaptando el tono y las referencias para una audiencia anglófona. No es una simple traducción.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Puedo cancelar cuando quiera?</div>
+      <div class="faq-a">Sí, sin preguntas. Cancelas desde Gumroad en cualquier momento y no se te cobra el siguiente mes. Sin permanencia, sin penalizaciones.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Es lo mismo que Jungle Scout o Helium10?</div>
+      <div class="faq-a">No, es complementario. Jungle Scout y Helium10 son herramientas activas que usas tú para investigar. Amazon Analytics Weekly es un informe ya interpretado — la inteligencia ya procesada que recibes cada lunes sin hacer nada.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Para quién es este informe?</div>
+      <div class="faq-a">Para vendedores de Amazon que quieren mantenerse informados sin dedicar horas a la investigación manual. También útil para agencias, consultores de e-commerce y cualquiera que quiera entender el mercado Amazon España semana a semana.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="text-align:center;padding-bottom:60px">
+  <div class="hero-tag" style="margin:0 auto 24px">⏰ Precio de lanzamiento hasta el 1 de mayo</div>
+  <h2 style="margin-bottom:16px">Empieza esta semana.<br>Cancela cuando quieras.</h2>
+  <p style="color:var(--muted);margin-bottom:32px;font-size:15px">
+    19€/mes · Datos reales · Análisis IA · ES + EN
+  </p>
+  <a href="https://pajarobueno.gumroad.com/l/AmazonAnalyticsWeekly" class="btn-primary" style="font-size:16px;padding:18px 40px">
+    Suscribirme ahora por 19€/mes →
+  </a>
+  <p style="margin-top:16px;font-size:12px;color:var(--muted)">
+    Quedan <strong style="color:var(--green-light)">17 plazas</strong> al precio de lanzamiento
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Shop<span>IA</span></div>
+  <p class="footer-sub">
+    shopiatools.com · Herramientas IA para vendedores Amazon · 
+    <a href="https://shopiatools.com" style="color:var(--green);text-decoration:none">Volver a ShopIA →</a>
+  </p>
+</footer>
+
+<script>
+  // Lang toggle (visual only)
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .step, .faq-item, .pricing-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
